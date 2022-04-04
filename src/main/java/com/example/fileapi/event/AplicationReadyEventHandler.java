@@ -1,21 +1,19 @@
-package com.example.fileapi.services;
+package com.example.fileapi.event;
 
+import com.example.fileapi.exception.StorageException;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.StorageClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 
-@Service
-public class FileStorageService implements IFileService {
+@Component
+public class AplicationReadyEventHandler {
 
     @Value("${firebase.bucket-name}")
     private String bucketName;
@@ -36,20 +34,7 @@ public class FileStorageService implements IFileService {
 
             FirebaseApp.initializeApp(options);
         } catch (IOException e) {
-            throw new StorageException("Failed to store file.", e);
-        }
-    }
-
-    @Override
-    public String store(MultipartFile file, String chat) {
-        try {
-            Bucket bucket = StorageClient.getInstance().bucket();
-            // use the chat id to generate a folder
-            String name = chat + "/" + generateFileName(file.getOriginalFilename());
-            bucket.create(name, file.getBytes(), file.getContentType());
-            return name;
-        } catch (IOException e) {
-            throw new StorageException("Failed to store file.", e);
+            throw new StorageException("Failed to open storage.", e);
         }
     }
 

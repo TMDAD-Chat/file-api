@@ -1,6 +1,6 @@
-package com.example.fileapi;
+package com.example.fileapi.controller;
 
-import com.example.fileapi.services.FileStorageService;
+import com.example.fileapi.services.impl.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +20,9 @@ public class FileController {
     @PostMapping("/")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("chat") String chat) {
         String name = fileService.store(file, chat);
+
+        // TODO send message to MessageReceiver
+
         return name;
     }
 }
