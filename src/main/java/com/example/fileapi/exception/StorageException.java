@@ -1,4 +1,4 @@
-package com.example.fileapi.services;
+package com.example.fileapi.exception;
 
 public class StorageException extends RuntimeException {
 
