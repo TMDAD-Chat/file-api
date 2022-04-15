@@ -20,9 +20,6 @@ public class FileController {
     @PostMapping("/")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("chat") String chat) {
         String name = fileService.store(file, chat);
-
-        // TODO send message to MessageReceiver
-
         return name;
     }
 }
