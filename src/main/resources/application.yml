@@ -1,0 +1,25 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+
+spring:
+  application:
+    name: "file-api"
+  servlet:
+    multipart:
+      max-file-size: 20MB
+server:
+  port: 8443
+  http2:
+    enabled: true
+  ssl:
+    key-store: /opt/file-api.p12
+    key-store-password: file-api
+    key-store-type: pkcs12
+    key-alias: file-api
+    key-password: file-api
+firebase:
+  bucket-name: tmdad-chat-app.appspot.com
+  service-account: ./tmdad-chat-app-firebase-adminsdk.json
